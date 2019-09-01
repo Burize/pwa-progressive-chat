@@ -1,6 +1,6 @@
 import Input, { InputProps } from 'antd/lib/Input';
 import 'antd/lib/Input/style/index.less';
 
-import withAntdFormItem from 'shared/helpers/forms/antdFormItem';
+import withFormField from 'shared/helpers/forms/withFormField';
 
-export default withAntdFormItem<InputProps>(Input);
+export default withFormField<InputProps>(Input);

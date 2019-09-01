@@ -1,7 +1,7 @@
 import Slider, { SliderProps } from 'antd/lib/Slider';
 import 'antd/lib/Slider/style/index.less';
 
-import withAntdFormItem from 'shared/helpers/forms/antdFormItem';
+import withFormField from 'shared/helpers/forms/withFormField';
 
 export { SliderProps };
-export default withAntdFormItem<SliderProps>(Slider);
+export default withFormField<SliderProps>(Slider);

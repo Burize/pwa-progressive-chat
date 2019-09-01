@@ -1,1 +1,1 @@
-export { default as TodoModule } from './Todos/Todos';
+export { default as AuthModule } from './Auth/Auth';

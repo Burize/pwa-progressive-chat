@@ -4,15 +4,15 @@ import { Route, Redirect, Switch } from 'react-router-dom';
 import { IModule } from 'shared/types/app';
 import { routes } from 'modules/routes';
 
-import { Todos } from './view';
+import { Auth } from './view';
 
 const TodosModule: IModule = {
   getRoutes() {
     return (
-      <Route key="createDomain" path={routes.todos}>
+      <Route key="auth" path={routes.auth}>
         <Switch>
-          <Route path={routes.todos} component={Todos} />
-          <Redirect to={routes.todos} />
+          <Route path={routes.auth} component={Auth} />
+          <Redirect to={routes.auth} />
         </Switch>
       </Route>
     );

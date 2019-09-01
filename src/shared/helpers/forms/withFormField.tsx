@@ -1,25 +1,64 @@
 import * as React from 'react';
-import { Field, FieldRenderProps, FieldProps as RFFieldProps } from 'react-final-form';
-import { Omit } from 'shared/types/utils';
+import Form, { FormItemProps as AntdProps } from 'antd/lib/Form';
+import 'antd/lib/Form/style/index.less';
+import { TValidation } from './validations';
+import { withHandlers, IChangeHandler } from '../reactive/withHandlers';
+import { isLeft } from 'fp-ts/lib/Either';
 
-type BaseWrappedFieldProps = FieldRenderProps<HTMLElement> & {
-  value?: any;
-  onChange?: any;
+type TErrorHandlers = {
+  error: IChangeHandler;
 };
 
-type RFFieldPropKey =
-  | 'allowNull' | 'format' | 'formatOnBlur' | 'parse' | 'name'
-  | 'isEqual' | 'subscription' | 'validate' | 'value';
+interface IFormItemProps {
+  validation?: TValidation;
+}
 
-function withFormField<P extends BaseWrappedFieldProps>(Component: React.ComponentType<P>, type?: string) {
-  type OwnProps = Omit<P, keyof BaseWrappedFieldProps>;
-  type FieldProps = Pick<RFFieldProps<HTMLElement>, RFFieldPropKey>;
-  type ResultProps = FieldProps & OwnProps;
+type THtmlAttributes = Pick<React.InputHTMLAttributes<any>, 'value' | 'onBlur'>;
 
-  const result: React.StatelessComponent<ResultProps> = (props: ResultProps) =>
-    <Field type={type} {...props} component={Component} />;
+function withFormField<IOwnProps extends THtmlAttributes>
+  (Component: React.ComponentType<IOwnProps>) {
+
+  type ResultProps = IOwnProps & AntdProps & TErrorHandlers & IFormItemProps;
+  const result: React.StatelessComponent<ResultProps> = (props: ResultProps) => {
+
+    const {
+      error,
+      validation, help, validateStatus, label, labelCol, wrapperCol, onBlur,
+      labelAlign, colon, className, ...rest } = props;
+
+    const validate = React.useCallback((e: React.FocusEvent) => {
+      if (onBlur) {
+        onBlur(e);
+      }
+      if (!validation) {
+        return;
+      }
+      const errors = validation(rest.value as string);
+
+      if (isLeft(errors)) {
+        error.setValue(errors.left.join(', '));
+      } else {
+        error.setValue('');
+      }
+    }, [rest.value]);
+
+    return (
+      <Form.Item
+        label={label}
+        help={help || error.value}
+        validateStatus={validateStatus || error.value ? 'error' : undefined}
+        labelCol={labelCol}
+        wrapperCol={wrapperCol}
+        labelAlign={labelAlign}
+        colon={colon}
+        className={className}
+      >
+        <Component onBlur={validate} {...rest as IOwnProps} />
+      </Form.Item>
+    );
+  };
   result.displayName = `withFormField(${Component.displayName || Component.name || 'Component'})`;
-  return result;
+  return withHandlers<TErrorHandlers>(['error'])(result);
 }
 
 export default withFormField;

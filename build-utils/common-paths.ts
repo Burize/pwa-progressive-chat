@@ -8,6 +8,6 @@ const appEntry = path.join(PROJECT_ROOT, 'src');
 const tslint = path.join(PROJECT_ROOT, 'tslint.json');
 const tsconfig = path.join(PROJECT_ROOT, 'tsconfig.json');
 const faviconPath = path.join(PROJECT_ROOT, 'public/assets/favicon.png');
-const swPath = path.join(appEntry, 'core/workers/rootWorker.ts');
+// const swPath = path.join(appEntry, 'core/workers/rootWorker.ts');
 
-export { projectRoot, outputPath, appEntry, tslint, tsconfig, faviconPath, swPath };
+export { projectRoot, outputPath, appEntry, tslint, tsconfig, faviconPath };

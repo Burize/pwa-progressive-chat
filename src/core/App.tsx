@@ -6,8 +6,6 @@ import { defaultRoute } from 'modules/routes';
 
 import 'shared/styles/fonts/index.scss';
 
-import './registerWorkers';
-
 import './App.scss';
 
 const App = () => {

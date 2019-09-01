@@ -1,6 +1,5 @@
-
 export const routes = {
-  todos: '/todos',
+  auth: '/auth',
 };
 
-export const defaultRoute = routes.todos;
+export const defaultRoute = routes.auth;

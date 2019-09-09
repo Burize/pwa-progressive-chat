@@ -1,19 +1,24 @@
 import * as React from 'react';
-import { block } from 'shared/helpers/bem';
-import { TextInput, Button } from 'shared/view/elements';
-import { withHandlers, IChangeHandler } from 'shared/helpers/reactive/withHandlers';
 import { BindAll } from 'lodash-decorators';
 
-import { array, snoc, lefts, isNonEmpty } from 'fp-ts/lib/Array';
+import { fold, either } from 'fp-ts/lib/Either';
+import { sequenceT } from 'fp-ts/lib/Apply';
+import { NonEmptyArray } from 'fp-ts/lib/NonEmptyArray';
 
+import { block } from 'shared/helpers/bem';
+import { TextInput, Button } from 'shared/view/elements';
+import { withHandlers, MakeHandlersProps } from 'shared/helpers/reactive';
 import { validatePassword, validatePhone } from 'shared/helpers/forms/validations';
 
 const b = block('sign-in-form');
 
-type HandlersProps = {
-  phone: IChangeHandler;
-  password: IChangeHandler;
-};
+interface IOwnProps {
+  isDisabled?: boolean;
+  error?: string;
+  onSubmit(phone: string, password: string): void;
+}
+
+type HandlersProps = MakeHandlersProps<'phone' | 'password'>;
 
 const fieldNames = {
   phone: 'phone',
@@ -21,29 +26,41 @@ const fieldNames = {
 
 };
 
-type Props = HandlersProps;
+type Props = IOwnProps & HandlersProps;
 @BindAll()
 class SignInForm extends React.PureComponent<Props> {
 
   public render() {
-    const { phone, password } = this.props;
+    const { phone, password, isDisabled, error } = this.props;
 
     return (
       <div className={b()}>
         <form onSubmit={this.onSubmit}>
           <TextInput
             name={fieldNames.phone}
+            label="Phone number"
             onChange={this.onPhoneChange}
             value={phone.value}
             validation={validatePhone}
           />
           <TextInput
             name={fieldNames.password}
+            label="Password"
+            type="password"
             onChange={this.onPasswordChange}
             value={password.value}
             validation={validatePassword}
           />
-          <Button htmlType="submit">sign in</Button>
+          <Button
+            htmlType="submit"
+            type="primary"
+            size="large"
+            disabled={isDisabled}
+            block
+          >
+            sign in
+          </Button>
+          {error}
         </form>
       </div>
     );
@@ -59,21 +76,11 @@ class SignInForm extends React.PureComponent<Props> {
 
   public onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
-    const { phone, password } = this.props;
-
-    const errors = lefts(
-      snoc(
-        array.of(validatePhone(phone.value)),
-        validatePassword(password.value),
-      ),
-    );
-
-    if (isNonEmpty(errors)) {
-      return;
-    }
-
-    return;
+    const { phone, password, onSubmit } = this.props;
+    fold<NonEmptyArray<string>, [string, string], void>(
+      (_) => null,
+      ([phoneValue, passwordValue]) => { onSubmit(phoneValue, passwordValue); },
+    )(sequenceT(either)(validatePhone(phone.value), validatePassword(password.value)));
   }
 }
 

@@ -1,4 +1,3 @@
-import * as namespace from './namespace';
-
-export { namespace };
+export { IAuthContract } from './namespace';
+export * from './contracts';
 export * from './view';

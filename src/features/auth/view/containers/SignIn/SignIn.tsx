@@ -1,18 +1,53 @@
 import * as React from 'react';
+import { filter } from 'rxjs/operators';
+import { isPending, isFailure, isSuccess } from '@devexperts/remote-data-ts';
+
 import { block } from 'shared/helpers/bem';
+import { withReactive, Observify } from 'shared/helpers/reactive';
+
 import { SignInForm } from '../../components';
+import { actions } from '../../../reactive';
+import { TAuthentication } from '../../../namespace';
 
 const b = block('sign-in');
 
-class SignIn extends React.PureComponent<any> {
+interface IOwnProps {
+  onAuthenticate(): void;
+}
+
+interface IReactiveProps {
+  authentication: TAuthentication;
+  authenticate(phone: string, password: string): void;
+}
+
+type Props = IOwnProps & IReactiveProps;
+
+class SignIn extends React.PureComponent<Props> {
 
   public render() {
+    const { authenticate, authentication } = this.props;
     return (
       <div className={b()}>
-        <SignInForm />
+        <SignInForm
+          onSubmit={authenticate}
+          isDisabled={isPending(authentication)}
+          error={isFailure(authentication) ? authentication.error : undefined}
+        />
       </div>
     );
   }
 }
 
-export default SignIn;
+const mapPropsToRx = (props: Props): Observify<IReactiveProps> => {
+  const { authentication$, authenticate } = actions;
+  authentication$.pipe(
+    filter(isSuccess),
+  ).subscribe(() => props.onAuthenticate());
+
+  return {
+    authenticate,
+    authentication: authentication$,
+  };
+};
+
+export default withReactive(SignIn)(mapPropsToRx);

@@ -14,6 +14,8 @@ export { default as Collapse } from 'antd/lib/collapse';
 import 'antd/lib/collapse/style/index.less';
 export { default as Alert } from 'antd/lib/alert';
 import 'antd/lib/alert/style/index.less';
+export { default as Tabs } from 'antd/lib/tabs';
+import 'antd/lib/tabs/style/index.less';
 
 export { default as Icon } from 'antd/lib/icon';
 
@@ -21,6 +23,4 @@ export { default as TextInput } from './TextInput/TextInput';
 export { default as NumberInput } from './NumberInput/NumberInput';
 export { default as Select } from './Select/Select';
 export { default as TextArea } from './TextArea/TextArea';
-export { default as Slider } from './Slider/Slider';
-export { default as DatePicker } from './DatePicker/DatePicker';
 export { default as Checkbox } from './Checkbox/Checkbox';

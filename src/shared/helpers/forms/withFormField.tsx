@@ -2,12 +2,10 @@ import * as React from 'react';
 import Form, { FormItemProps as AntdProps } from 'antd/lib/Form';
 import 'antd/lib/Form/style/index.less';
 import { TValidation } from './validations';
-import { withHandlers, IChangeHandler } from '../reactive/withHandlers';
+import { withHandlers, MakeHandlersProps } from '../reactive/withHandlers';
 import { isLeft } from 'fp-ts/lib/Either';
 
-type TErrorHandlers = {
-  error: IChangeHandler;
-};
+type TErrorHandlers = MakeHandlersProps<'error'>;
 
 interface IFormItemProps {
   validation?: TValidation;
@@ -15,8 +13,7 @@ interface IFormItemProps {
 
 type THtmlAttributes = Pick<React.InputHTMLAttributes<any>, 'value' | 'onBlur'>;
 
-function withFormField<IOwnProps extends THtmlAttributes>
-  (Component: React.ComponentType<IOwnProps>) {
+function withFormField<IOwnProps extends THtmlAttributes>(Component: React.ComponentType<IOwnProps>) {
 
   type ResultProps = IOwnProps & AntdProps & TErrorHandlers & IFormItemProps;
   const result: React.StatelessComponent<ResultProps> = (props: ResultProps) => {

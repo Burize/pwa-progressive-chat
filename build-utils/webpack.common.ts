@@ -5,6 +5,7 @@ import * as ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import * as FaviconsWebpackPlugin from 'favicons-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import * as autoprefixer from 'autoprefixer';
+import * as postcssEasyImport from 'postcss-easy-import';
 // import * as ServiceWorkerWebpackPlugin from 'serviceworker-webpack-plugin';
 
 import getEnvParams from '../src/shared/helpers/getEnvParams';
@@ -59,6 +60,10 @@ const config: webpack.Configuration = {
             options: {
               plugins: () => {
                 return [
+                  postcssEasyImport({
+                    extensions: '.scss',
+                    path: ['./src'],
+                  }),
                   autoprefixer({
                     browsers: ['last 2 versions'],
                   }),

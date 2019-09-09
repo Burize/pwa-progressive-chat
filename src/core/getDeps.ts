@@ -1,9 +1,9 @@
 import { Api } from 'services/api';
-import { messageService } from 'services/messages';
 import { IDependencies } from 'shared/types/app';
+import { storage } from 'services/storage';
 
-const api = new Api();
+const api = new Api(storage);
 
 export default function getDeps(): IDependencies {
-  return { api, messageService };
+  return { api, storage };
 }

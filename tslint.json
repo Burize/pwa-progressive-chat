@@ -69,6 +69,7 @@
     "arrow-parens": false,
     "only-arrow-functions": false,
     "class-name": true,
+    "ban-types": false,
     "comment-format": [
       true,
       "check-space"

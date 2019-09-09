@@ -3,7 +3,9 @@ import { createHandler, IHandler } from './createHandler';
 import { map } from 'rxjs/operators';
 import { merge, Subscription } from 'rxjs';
 
-export interface IChangeHandler { setValue: IHandler<string>['handle']; value: string; }
+interface IChangeHandler { setValue: IHandler<string | number | boolean>['handle']; value: string; }
+
+export type MakeHandlersProps<K extends string> = Record<K, IChangeHandler>;
 
 interface IHP {
   [key: string]: IChangeHandler;

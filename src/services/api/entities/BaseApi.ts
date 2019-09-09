@@ -35,6 +35,7 @@ class BaseApi {
     if (converter) {
       return converter(response.data as ResponseData);
     }
+    return response.data;
   }
 
 }

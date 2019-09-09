@@ -1,0 +1,25 @@
+.ant-tabs {
+  &-nav {
+    width: 100%;
+
+    & > div {
+      width: 100%;
+      display: flex;
+    }
+  }
+
+  &-tab {
+    flex: 1;
+    text-align: center;
+  }
+}
+
+.ant-form-item-control {
+  .ant-form-item-control {
+    line-height: 0;
+  }
+
+  .ant-form-item {
+    margin: 0;
+  }
+}

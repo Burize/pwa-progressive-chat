@@ -1,10 +1,15 @@
+@import "shared/styles/mixins/adaptive.scss";
+
 .layout {
-  min-width: 800px;
   min-height: 100% !important;
 
   &__content {
     align-self: center;
     max-width: 500px; // TODO: rework layout
     width: 100%;
+
+    @include respond-to(mobile) {
+      max-width: unset;
+    }
   }
 }

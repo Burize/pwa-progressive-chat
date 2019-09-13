@@ -1,0 +1,15 @@
+.messages-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0 0.5rem 0.5rem;
+
+  &__message {
+    min-width: 6.25rem;
+    margin-top: 1rem;
+
+    &_is-own {
+      align-self: flex-end;
+    }
+  }
+}

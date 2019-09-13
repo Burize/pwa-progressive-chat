@@ -6,7 +6,7 @@ import { routes } from 'modules/routes';
 
 import { Auth } from './view';
 
-const TodosModule: IModule = {
+const AuthModule: IModule = {
   getRoutes() {
     return [
       <Route key="auth" path={routes.auth} component={Auth} />,
@@ -14,4 +14,4 @@ const TodosModule: IModule = {
   },
 };
 
-export default TodosModule;
+export default AuthModule;

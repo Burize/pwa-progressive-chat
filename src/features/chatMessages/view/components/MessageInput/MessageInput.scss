@@ -1,0 +1,23 @@
+@import "shared/styles/palette.scss";
+
+.message-input {
+  position: relative;
+  &__input {
+    padding-right: 1.75rem;
+    border: none;
+    border-radius: 0;
+    background-color: $mirage;
+    color: $wild-sand;
+    font-size: 1rem;
+    resize: none;
+  }
+
+  &__send-icon {
+    position: absolute;
+    right: 0.3125rem;
+    bottom: 0.125rem;
+    font-size: 1.2rem;
+    color: $wild-sand;
+    cursor: pointer;
+  }
+}

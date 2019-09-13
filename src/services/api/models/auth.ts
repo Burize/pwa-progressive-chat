@@ -11,3 +11,7 @@ export interface IServerRegisterRequest {
   phone: String;
   password: String;
 }
+
+export type AuthenticateResponse = AuthToken;
+
+export type AuthToken = string;

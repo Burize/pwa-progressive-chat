@@ -1,0 +1,1 @@
+export { getAcronym } from './getAcronym';

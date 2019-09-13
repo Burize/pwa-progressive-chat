@@ -1,4 +1,4 @@
-import { UserId } from 'shared/types/models';
+import { UserId } from 'shared/types/models/user';
 
 export interface IServerUser {
   id: UserId;
@@ -7,3 +7,5 @@ export interface IServerUser {
   phone: String;
   avatar: String;
 }
+
+export type IServerMember = Omit<IServerUser, 'phone'>;

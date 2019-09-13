@@ -5,7 +5,7 @@ import { block } from 'shared/helpers/bem';
 
 import 'antd/lib/layout/style/index.less';
 
-const { Header, Footer, Content } = ALayout;
+const { Header, Content } = ALayout;
 
 import './Layout.scss';
 
@@ -18,7 +18,6 @@ class Layout extends React.PureComponent {
       <ALayout className={b()}>
         <Header />
         <Content className={b('content').toString()}>{children}</Content>
-        <Footer />
       </ALayout>
     );
   }

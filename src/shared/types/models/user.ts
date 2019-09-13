@@ -1,4 +1,6 @@
-export type UserId = string;
+import { Branding } from '../utils';
+
+export type UserId = Branding<'userId', string>;
 
 export interface IUser {
   id: UserId;
@@ -7,3 +9,5 @@ export interface IUser {
   phone: String;
   avatar: String;
 }
+
+export type IMember = Omit<IUser, 'phone'>;

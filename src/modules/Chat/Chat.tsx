@@ -6,7 +6,7 @@ import { routes } from 'modules/routes';
 
 import { Chat } from './view';
 
-const TodosModule: IModule = {
+const ChatModule: IModule = {
   getRoutes() {
     return [
       <Route key="chat" path={routes.chat} component={Chat} />,
@@ -14,4 +14,4 @@ const TodosModule: IModule = {
   },
 };
 
-export default TodosModule;
+export default ChatModule;

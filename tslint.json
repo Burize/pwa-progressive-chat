@@ -70,6 +70,7 @@
     "only-arrow-functions": false,
     "class-name": true,
     "ban-types": false,
+    "member-ordering": false,
     "comment-format": [
       true,
       "check-space"

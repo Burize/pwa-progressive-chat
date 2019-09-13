@@ -1,5 +1,7 @@
-import { IUser } from 'shared/types/models';
-import { AuthToken } from 'services/api/types/Auth';
+import { IUser } from 'shared/types/models/user';
+import { AuthToken } from 'services/api';
+
+import { Option, some, none } from 'fp-ts/lib/Option';
 
 const keys = {
   user: 'user',
@@ -18,6 +20,11 @@ class Storage {
 
   public saveUser(user: IUser) {
     localStorage.setItem(keys.user, JSON.stringify(user));
+  }
+
+  public getUser(): Option<IUser> {
+    const user = localStorage.getItem(keys.user);
+    return user ? some(JSON.parse(user)) : none;
   }
 }
 

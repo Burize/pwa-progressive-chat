@@ -19,8 +19,9 @@ export const withReactive = function <P>(Component: ComponentType<P>) {
       private rxHandlers?: Function[];
 
       public componentWillMount() {
-        const dividedProps = R.partition(key => typeof this.mappedProps[key] !== 'function', R.keys(this.mappedProps));
-        const inputs = dividedProps[0]
+        const [observables, handlers] = R.partition(
+          key => typeof this.mappedProps[key] !== 'function', R.keys(this.mappedProps));
+        const inputs = observables
           .map(key => (this.mappedProps[key] as Observable<IReactiveProps[keyof IReactiveProps]>)
             .pipe(map((value: unknown) => ({ [key]: value }))),
           );
@@ -28,7 +29,7 @@ export const withReactive = function <P>(Component: ComponentType<P>) {
 
         this.inputSubscription = merged.subscribe(this.setState.bind(this));
 
-        this.rxHandlers = R.pickAll(dividedProps[1] as string[], this.mappedProps) as Function[];
+        this.rxHandlers = R.pickAll(handlers as string[], this.mappedProps) as Function[];
       }
 
       public componentWillUnmount() {

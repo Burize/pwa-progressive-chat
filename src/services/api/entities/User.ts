@@ -3,9 +3,9 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 import BaseApi from './BaseApi';
-import { convertUserResponse } from '../converters';
-import { IServerUser } from '../models/user';
-import { IUser } from 'shared/types/models';
+import { convertUserResponse, convertMemberResponse } from '../converters';
+import { IServerUser, IServerMember } from '../models/user';
+import { IUser, IMember } from 'shared/types/models/user';
 
 @BindAll()
 class User extends BaseApi {
@@ -16,6 +16,15 @@ class User extends BaseApi {
       isProtected: true,
     }).pipe(
       map(response => this.handleResponse(response, convertUserResponse)),
+    );
+  }
+
+  public loadMembers(ids: string[]): Observable<IMember[]> {
+    return this.actions.get<IServerMember[]>({
+      url: `/members/${JSON.stringify(ids)}`,
+      isProtected: true,
+    }).pipe(
+      map(response => this.handleResponse(response, convertMemberResponse)),
     );
   }
 

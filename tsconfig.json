@@ -19,7 +19,7 @@
       "dom",
       "scripthost",
       "esnext",
-      "webworker",
+      "webworker"
     ],
     "jsx": "react",
     "experimentalDecorators": true,
@@ -31,7 +31,7 @@
     "allowSyntheticDefaultImports": false,
     "importHelpers": true,
     "strictPropertyInitialization": true,
-    "strictFunctionTypes": false,
+    "strictFunctionTypes": false
   },
   "include": [
     "src/**/*",

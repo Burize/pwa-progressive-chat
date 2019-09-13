@@ -3,8 +3,7 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 import BaseApi from './BaseApi';
-import { AuthenticateResponse, AuthToken } from '../types/Auth';
-import { IRegisterRequest } from '../models/auth';
+import { AuthenticateResponse, AuthToken, IRegisterRequest } from '../models/auth';
 import { convertUserRegisterRequest } from '../converters';
 
 @BindAll()

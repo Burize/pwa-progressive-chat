@@ -1,3 +1,9 @@
+@import "./palette.scss";
+
+.ant-layout-header {
+  background-color: $mirage;
+}
+
 .ant-tabs {
   &-nav {
     width: 100%;

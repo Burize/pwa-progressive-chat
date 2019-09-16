@@ -21,7 +21,10 @@ export const Message = React.memo((props: IProps) => {
   const { userName, message: { body, createdAt }, isOwnMessage } = props;
   return (
     <div className={b({ ['is-own']: isOwnMessage })}>
-      {!isOwnMessage && <div className={b('avatar')}><Avatar size={48}>{getAcronym(userName)}</Avatar></div>}
+      {!isOwnMessage &&
+        <div className={b('avatar')}>
+          <Avatar size={48}>{getAcronym(userName)}</Avatar>
+        </div>}
       <div className={b('content')}>
         <div className={b('user')}>{userName}</div>
         <div className={b('body')}>{body}</div>

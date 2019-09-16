@@ -1,7 +1,32 @@
 @import "./palette.scss";
 
 .ant-layout-header {
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
   background-color: $mirage;
+}
+
+.ant-drawer {
+  &-header {
+    border: none;
+    background-color: $calypso;
+  }
+
+  &-header,
+  &-title {
+    color: $wild-sand;
+  }
+
+  &-body {
+    padding: 0;
+    line-height: 1;
+  }
+
+  &-content {
+    color: $wild-sand;
+    background-color: $dark-pearl;
+  }
 }
 
 .ant-tabs {
@@ -27,5 +52,13 @@
 
   .ant-form-item {
     margin: 0;
+  }
+}
+
+.ant-input {
+  color: $mirage;
+
+  &[disabled] {
+    background-color: unset;
   }
 }

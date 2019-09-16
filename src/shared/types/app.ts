@@ -1,7 +1,8 @@
 import { ReactElement } from 'react';
 import { RouteProps } from 'react-router';
-import { Api } from 'services/api';
-import { storage } from 'services/storage';
+
+import { Api, Socket } from 'services/api';
+import Storage from 'services/storage/Storage';
 
 export interface IModule {
   getRoutes(): ReactElement<RouteProps> | Array<ReactElement<RouteProps>>;
@@ -9,7 +10,8 @@ export interface IModule {
 
 export interface IDependencies {
   api: Api;
-  storage: typeof storage;
+  socket: Socket;
+  storage: Storage;
 }
 
 export type CommunicationType = 'success' | 'fetching' | 'fail';

@@ -1,10 +1,12 @@
 export { default as Steps } from 'antd/lib/steps';
 import 'antd/lib/steps/style/index.less';
+export { default as Drawer } from 'antd/lib/drawer';
+import 'antd/lib/drawer/style/index.less';
 export { default as Button } from 'antd/lib/button';
 import 'antd/lib/button/style/index.less';
 export { default as Spinner } from 'antd/lib/spin';
 import 'antd/lib/spin/style/index.less';
-export { default as Message } from 'antd/lib/message';
+export { default as message, MessageType } from 'antd/lib/message';
 import 'antd/lib/message/style/index.less';
 export { default as Notification } from 'antd/lib/notification';
 import 'antd/lib/notification/style/index.less';

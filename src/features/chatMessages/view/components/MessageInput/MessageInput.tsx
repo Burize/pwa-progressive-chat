@@ -12,6 +12,7 @@ const b = block('message-input');
 type HandlersProps = MakeHandlersProps<'message'>;
 
 interface IOwnProps {
+  disabled?: boolean;
   onSendMessage(message: string): void;
 }
 
@@ -21,18 +22,20 @@ type Props = IOwnProps & HandlersProps;
 class Message extends React.Component<Props> {
 
   public render() {
-    const { message } = this.props;
+    const { message, disabled } = this.props;
 
     return (
       <div className={b()}>
         <Input.TextArea
+          disabled={disabled}
           className={b('input')}
           value={message.value}
           onChange={this.onMessageChange}
           placeholder="Write a message ..."
           autosize={{ minRows: 1, maxRows: 3 }}
         />
-        {message.value && <Icon onClick={this.sendMessage} type="check-circle" className={b('send-icon').toString()} />}
+        {!disabled && message.value &&
+          <Icon onClick={this.sendMessage} type="check-circle" className={b('send-icon')} />}
       </div>
     );
   }

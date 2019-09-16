@@ -4,20 +4,25 @@ import ALayout from 'antd/lib/layout';
 import { block } from 'shared/helpers/bem';
 
 import 'antd/lib/layout/style/index.less';
+import './Layout.scss';
 
 const { Header, Content } = ALayout;
 
-import './Layout.scss';
-
 const b = block('layout');
 
-class Layout extends React.PureComponent {
+interface IProps {
+  headerContent?: React.ReactElement;
+}
+
+class Layout extends React.PureComponent<IProps> {
   public render() {
-    const { children } = this.props;
+    const { children, headerContent } = this.props;
     return (
       <ALayout className={b()}>
-        <Header />
-        <Content className={b('content').toString()}>{children}</Content>
+        <Header>
+          {headerContent}
+        </Header>
+        <Content className={b('content')}>{children}</Content>
       </ALayout>
     );
   }

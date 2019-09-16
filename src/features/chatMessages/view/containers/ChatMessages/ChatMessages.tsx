@@ -2,7 +2,7 @@ import * as React from 'react';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { BindAll } from 'lodash-decorators';
-import { fromNullable, Option, fold } from 'fp-ts/lib/Option';
+import { fromNullable, Option, fold, none, some, isSome, isNone } from 'fp-ts/lib/Option';
 import { pipe } from 'fp-ts/lib/pipeable';
 
 import { messagesService } from 'services/messages';
@@ -21,11 +21,12 @@ import { IMessageWithAuthor } from '../../../namespace';
 import './ChatMessages.scss';
 
 const b = block('chat-messages');
-const LIST_DIV_ID = 'chatMessagesList';
+const LIST_DOM_ELEMENT_ID = 'chatMessagesList';
 
 interface IReactiveProps {
   user: Option<IUser>;
-  messages: IMessageWithAuthor[];
+  messages: Option<IMessageWithAuthor[]>;
+  isCanSendMessage: boolean;
   sendMessage(message: IWrittenChatMessage): void;
 }
 
@@ -33,26 +34,36 @@ type Props = IReactiveProps;
 @BindAll()
 class ChatMessages extends React.PureComponent<Props> {
   public componentDidUpdate(prevProps: Props) {
-    if (this.props.messages.length !== 0 && prevProps.messages.length === 0) {
-      scrollToBottom(LIST_DIV_ID);
+    const { messages } = this.props;
+    if (isSome(messages) && isSome(prevProps.messages) &&
+      messages.value.length !== 0 && prevProps.messages.value.length === 0) {
+      scrollToBottom(LIST_DOM_ELEMENT_ID);
     }
   }
 
   public render() {
-    const { messages, user } = this.props;
+    const { messages, user, isCanSendMessage } = this.props;
+
+    if (isNone(user)) {
+      return <div className={b('error')}>Empty user when loading messages</div>;
+    }
     return (
       <div className={b()}>
-        {fold<IUser, React.ReactElement>(
-          () => <Spinner />,
-          u =>
-            <div className={b('messages')} id={LIST_DIV_ID}>
-              <MessagesList
-                messages={messages}
-                user={u}
-              />
-            </div>,
-        )(user)}
-        <MessageInput onSendMessage={this.sendMessage} />
+        {
+          pipe(
+            messages,
+            fold(
+              () => <Spinner className={b('loader')} />,
+              m =>
+                <div className={b('messages')} id={LIST_DOM_ELEMENT_ID}>
+                  <MessagesList
+                    messages={m}
+                    user={user.value}
+                  />
+                </div>,
+            ),
+          )}
+        <MessageInput disabled={!isCanSendMessage} onSendMessage={this.sendMessage} />
       </div>
     );
   }
@@ -72,19 +83,27 @@ const mapPropsToRx = (): Observify<IReactiveProps> => {
     map(ev => ev.type === 'allMessages' ? ev.payload.map(m => m.userId) : [ev.payload.userId]),
   ).subscribe(authorIds => actions.loadMembers(authorIds));
 
-  const messageWithMembers$: Observable<IMessageWithAuthor[]> =
+  const messageWithMembers$: Observable<Option<IMessageWithAuthor[]>> =
     combineLatest(messagesService.messages$, actions.members$).pipe(
-      map(([messages, members]) => messages.map(message => (
-        {
-          message,
-          author: fromNullable(members.find(member => member.id === message.userId)),
-        })),
+      map(
+        ([optionMessages, members]) => pipe(
+          optionMessages,
+          fold(
+            () => none,
+            messages => some(messages.map(message => (
+              {
+                message,
+                author: fromNullable(members.find(member => member.id === message.userId)),
+              })),
+            )),
+        ),
       ),
     );
 
   return {
     user: userService.user$,
     messages: messageWithMembers$,
+    isCanSendMessage: messagesService.isAvailable$,
     sendMessage: messagesService.sendMessage,
   };
 };

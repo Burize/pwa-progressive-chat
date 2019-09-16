@@ -1,4 +1,6 @@
+import getDeps from 'core/getDeps';
 import { MessagesService } from './Messages';
-import { socketService } from 'services/api/socket';
 
-export const messagesService = new MessagesService(socketService);
+const { socket } = getDeps();
+
+export const messagesService = new MessagesService(socket);

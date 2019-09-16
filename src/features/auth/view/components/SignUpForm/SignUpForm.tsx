@@ -64,6 +64,7 @@ class SignUpForm extends React.PureComponent<Props> {
             name={fieldNames.password}
             label="Password"
             type="password"
+            autoComplete="new-password"
             onChange={this.onPasswordChange}
             value={password.value}
             validation={validatePassword}

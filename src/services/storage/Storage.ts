@@ -1,21 +1,21 @@
+import { Option, some, none, fromNullable } from 'fp-ts/lib/Option';
+
 import { IUser } from 'shared/types/models/user';
 import { AuthToken } from 'services/api';
-
-import { Option, some, none } from 'fp-ts/lib/Option';
 
 const keys = {
   user: 'user',
   authToken: 'auth.token',
 };
 
-class Storage {
+export default class Storage {
 
   public saveAuthToken(token: AuthToken) {
     localStorage.setItem(keys.authToken, token);
   }
 
-  public getAuthToken(): AuthToken | null {
-    return localStorage.getItem(keys.authToken);
+  public getAuthToken(): Option<AuthToken> {
+    return fromNullable(localStorage.getItem(keys.authToken));
   }
 
   public saveUser(user: IUser) {
@@ -27,5 +27,3 @@ class Storage {
     return user ? some(JSON.parse(user)) : none;
   }
 }
-
-export default new Storage();

@@ -1,15 +1,15 @@
 export interface IRegisterRequest {
-  name: String;
-  surname: String;
-  phone: String;
-  password: String;
+  name: string;
+  surname: string;
+  phone: string;
+  password: string;
 }
 
 export interface IServerRegisterRequest {
-  firstName: String;
-  secondName: String;
-  phone: String;
-  password: String;
+  firstName: string;
+  secondName: string;
+  phone: string;
+  password: string;
 }
 
 export type AuthenticateResponse = AuthToken;

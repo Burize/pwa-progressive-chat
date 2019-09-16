@@ -1,5 +1,7 @@
 import { AxiosRequestConfig } from 'axios';
 import Axios from 'axios-observable';
+import { pipe } from 'fp-ts/lib/pipeable';
+import { fold } from 'fp-ts/lib/Option';
 import { AxiosObservable } from 'axios-observable/dist/axios-observable.interface';
 
 import getEnvParams from 'shared/helpers/getEnvParams';
@@ -58,11 +60,18 @@ class HttpActions {
     const { isProtected } = params;
 
     if (isProtected) {
-      const token = this.storage.getAuthToken();
-      params.options = {
-        ...params.options,
-        headers: { 'Authorization': `Bearer ${token}`, ...(params.options || {}).headers },
-      };
+      pipe(
+        this.storage.getAuthToken(),
+        fold(() => {
+          throw Error('there is no token when requesting to a secure path');
+        },
+          token => {
+            params.options = {
+              ...params.options,
+              headers: { 'Authorization': `Bearer ${token}`, ...(params.options || {}).headers },
+            };
+          }),
+      );
     }
 
     return params;

@@ -1,1 +1,3 @@
-export { default as storage } from './Storage';
+import Storage from './Storage';
+
+export const storage = new Storage();

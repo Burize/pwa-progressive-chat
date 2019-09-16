@@ -1,14 +1,18 @@
 @import "shared/styles/palette.scss";
+@import "shared/styles/constants.scss";
 
 .message-input {
-  position: relative;
+  padding: 0.5rem 0;
+  background-color: $mirage;
+
   &__input {
     padding-right: 1.75rem;
     border: none;
     border-radius: 0;
     background-color: $mirage;
-    color: $wild-sand;
+    color: $wild-sand !important;
     font-size: 1rem;
+    font-family: $primary-font;
     resize: none;
   }
 

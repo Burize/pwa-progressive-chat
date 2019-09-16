@@ -1,21 +1,38 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
+import { Option, fold } from 'fp-ts/lib/Option';
+import { pipe } from 'fp-ts/lib/pipeable';
 import { BindAll } from 'lodash-decorators';
 
+import { navigationRoutes } from 'modules/routes';
 import { ChatMessages } from 'features/chatMessages';
 import { block } from 'shared/helpers/bem';
-import { Layout } from 'shared/view';
+import { Layout, Navigation } from 'shared/view';
+import { withReactive, Observify } from 'shared/helpers/reactive';
+import { userService } from 'services/user';
+import { IUser } from 'shared/types/models/user';
 
 import './Chat.scss';
 
 const b = block('chat-module');
 
-type Props = RouteComponentProps<{}>;
+interface IReactiveProps {
+  user: Option<IUser>;
+}
+
+type Props = IReactiveProps & RouteComponentProps<{}>;
+
 @BindAll()
 class Chat extends React.PureComponent<Props> {
   public render() {
+    const { user } = this.props;
     return (
-      <Layout>
+      <Layout
+        headerContent={pipe(
+          user,
+          fold(() => undefined, (u) => <Navigation routes={navigationRoutes} user={u} />),
+        )}
+      >
         <div className={b()}>
           <ChatMessages />
         </div>
@@ -24,4 +41,10 @@ class Chat extends React.PureComponent<Props> {
   }
 }
 
-export default Chat;
+const mapPropsToRx = (): Observify<IReactiveProps> => {
+  return {
+    user: userService.user$,
+  };
+};
+
+export default withReactive(Chat)(mapPropsToRx);

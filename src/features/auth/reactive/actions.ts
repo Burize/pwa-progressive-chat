@@ -1,13 +1,13 @@
 import { BehaviorSubject, of } from 'rxjs';
 import { failure, success, initial } from '@devexperts/remote-data-ts';
 import { tap, switchMap, catchError, map } from 'rxjs/operators';
+import { isSome } from 'fp-ts/lib/Option';
 
 import getDeps from 'core/getDeps';
 import { getErrorMessage } from 'shared/helpers/error';
 import { userService } from 'services/user';
 
 import { TAuthentication, TRegistration } from '../namespace';
-import { Either, left, right } from 'fp-ts/lib/Either';
 
 const { api, storage } = getDeps();
 
@@ -35,7 +35,7 @@ export function register(name: string, surname: string, phone: string, password:
     ).subscribe(registration$);
 }
 
-export function checkAuth(): Either<null, null> {
+export function isUserAuthenticated(): boolean {
   const token = storage.getAuthToken();
-  return token ? right(null) : left(null);
+  return isSome(token);
 }

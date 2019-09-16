@@ -1,0 +1,12 @@
+@import "shared/styles/palette.scss";
+
+.navigation-profile {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+
+  &__phone {
+    font-size: 0.875rem;
+    font-weight: 400;
+  }
+}

@@ -2,10 +2,10 @@ import { UserId } from 'shared/types/models/user';
 
 export interface IServerUser {
   id: UserId;
-  firstName: String;
-  secondName: String;
-  phone: String;
-  avatar: String;
+  firstName: string;
+  secondName: string;
+  phone: string;
+  avatar: string;
 }
 
 export type IServerMember = Omit<IServerUser, 'phone'>;

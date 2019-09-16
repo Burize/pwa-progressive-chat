@@ -1,9 +1,12 @@
 import * as React from 'react';
 import Form, { FormItemProps as AntdProps } from 'antd/lib/Form';
-import 'antd/lib/Form/style/index.less';
+import { pipe } from 'fp-ts/lib/pipeable';
+import { fold } from 'fp-ts/lib/Either';
+
 import { TValidation } from './validations';
 import { withHandlers, MakeHandlersProps } from '../reactive/withHandlers';
-import { isLeft } from 'fp-ts/lib/Either';
+
+import 'antd/lib/Form/style/index.less';
 
 type TErrorHandlers = MakeHandlersProps<'error'>;
 
@@ -11,7 +14,7 @@ interface IFormItemProps {
   validation?: TValidation;
 }
 
-type THtmlAttributes = Pick<React.InputHTMLAttributes<any>, 'value' | 'onBlur'>;
+type THtmlAttributes = Pick<React.InputHTMLAttributes<any>, 'value' | 'onBlur' | 'autoComplete'>;
 
 function withFormField<IOwnProps extends THtmlAttributes>(Component: React.ComponentType<IOwnProps>) {
 
@@ -30,13 +33,11 @@ function withFormField<IOwnProps extends THtmlAttributes>(Component: React.Compo
       if (!validation) {
         return;
       }
-      const errors = validation(rest.value as string);
 
-      if (isLeft(errors)) {
-        error.setValue(errors.left.join(', '));
-      } else {
-        error.setValue('');
-      }
+      pipe(
+        validation(rest.value as string),
+        fold((errors) => error.setValue(errors.join(', ')), () => error.setValue('')),
+      );
     }, [rest.value]);
 
     return (

@@ -10,6 +10,7 @@ import { Tabs } from 'shared/view/elements';
 import SignUp from 'features/auth/view/containers/SignUp/SignUp';
 
 import './Auth.scss';
+import { initializeServices } from 'core/initializeServices';
 
 const b = block('auth-module');
 
@@ -23,12 +24,12 @@ class Auth extends React.PureComponent<Props> {
           <Tabs defaultActiveKey="SignIn" size="large">
             <Tabs.TabPane tab="Sign In" key="SignIn">
               <div className={b('form')}>
-                <SignIn onAuthenticate={this.redirectToMain} />
+                <SignIn onAuthenticate={this.onAuthEnd} />
               </div>
             </Tabs.TabPane>
             <Tabs.TabPane tab="Sign Up" key="SignUp">
               <div className={b('form')}>
-                <SignUp onRegister={this.redirectToMain} />
+                <SignUp onRegister={this.onAuthEnd} />
               </div>
             </Tabs.TabPane>
           </Tabs>
@@ -37,7 +38,8 @@ class Auth extends React.PureComponent<Props> {
     );
   }
 
-  private redirectToMain() {
+  private async onAuthEnd() {
+    await initializeServices();
     this.props.history.push(routes.chat);
   }
 }

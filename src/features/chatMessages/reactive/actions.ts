@@ -18,7 +18,7 @@ export function loadMembers(ids: UserId[]) {
     ).pipe(
       filter(isSuccess),
       map(members => members.value),
-    ).subscribe(_members$);
+    ).subscribe(members => _members$.next(members));
 }
 export const members$ = _members$
   .pipe(

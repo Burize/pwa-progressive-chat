@@ -10,7 +10,7 @@
 .ant-drawer {
   &-header {
     border: none;
-    background-color: $calypso;
+    background-color: $ebony-clay;
   }
 
   &-header,
@@ -61,4 +61,27 @@
   &[disabled] {
     background-color: unset;
   }
+}
+
+.ant-avatar > img {
+  height: unset;
+  min-height: 100%;
+}
+
+.ant-modal-content,
+.ant-modal-header {
+  background-color: $vulcan;
+}
+
+.ant-modal-close {
+  color: $wild-sand;
+}
+
+.ant-modal-footer,
+.ant-modal-header {
+  border-color: darken($vulcan, 3%);
+}
+
+.ant-message-notice-content {
+  background-color: $dark-calypso;
 }

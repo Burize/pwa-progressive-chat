@@ -1,7 +1,9 @@
 import { BehaviorSubject } from 'rxjs';
-import { none, Option, some } from 'fp-ts/lib/Option';
+import { none, Option, some, fold } from 'fp-ts/lib/Option';
+import { pipe } from 'fp-ts/lib/pipeable';
 
 import { IUser } from 'shared/types/models/user';
+import { Src } from 'shared/types/app';
 
 import { IUserStorage } from './namespace';
 
@@ -21,5 +23,19 @@ export class UserService {
   public saveUser(user: IUser) {
     this.storage.saveUser(user);
     this._user$.next(some(user));
+  }
+
+  public setAvatar(avatar: Src) {
+    pipe(
+      this.storage.getUser(),
+      fold(
+        () => { throw Error('empty user at setAvatar'); },
+        (user) => {
+          const newUser: IUser = { ...user, avatar };
+          this.storage.saveUser(newUser);
+          this._user$.next(some(newUser));
+        },
+      ),
+    );
   }
 }

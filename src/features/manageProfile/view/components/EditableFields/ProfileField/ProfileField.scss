@@ -1,0 +1,23 @@
+@import "shared/styles/palette.scss";
+
+.profile-field {
+  display: flex;
+  align-items: flex-end;
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+
+  &__icon {
+    margin-right: 1.5rem;
+    color: $regent-gray;
+    font-size: 1.75rem;
+  }
+
+  &__value {
+    color: $wild-sand;
+  }
+
+  &__description {
+    margin-top: 0.25rem;
+    color: $regent-gray;
+  }
+}

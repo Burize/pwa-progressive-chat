@@ -4,9 +4,10 @@ import { formatMessageCreationDate } from 'shared/helpers/date';
 import { IChatMessage } from 'shared/types/models/message';
 import { block } from 'shared/helpers/bem';
 import { Avatar } from 'shared/view/elements';
+import { getAcronym } from 'shared/helpers/string';
+import getUserAvatarPath from 'shared/helpers/getUserAvatarPath';
 
 import './Message.scss';
-import { getAcronym } from 'shared/helpers/string';
 
 interface IProps {
   message: IChatMessage;
@@ -18,12 +19,12 @@ interface IProps {
 const b = block('chat-message');
 
 export const Message = React.memo((props: IProps) => {
-  const { userName, message: { body, createdAt }, isOwnMessage } = props;
+  const { userName, message: { body, createdAt }, avatar, isOwnMessage } = props;
   return (
     <div className={b({ ['is-own']: isOwnMessage })}>
       {!isOwnMessage &&
         <div className={b('avatar')}>
-          <Avatar size={48}>{getAcronym(userName)}</Avatar>
+          <Avatar src={avatar && getUserAvatarPath(avatar)} size={48}>{getAcronym(userName)}</Avatar>
         </div>}
       <div className={b('content')}>
         <div className={b('user')}>{userName}</div>

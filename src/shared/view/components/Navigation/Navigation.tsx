@@ -26,7 +26,7 @@ type IProps = HandlerProps & IOwnProps;
 @bindAll()
 class Navigation extends React.PureComponent<IProps> {
   public render() {
-    const { isDrawerOpen, routes, user: { name, surname, phone } } = this.props;
+    const { isDrawerOpen, routes, user: { name, surname, phone, avatar } } = this.props;
     return (
       <>
         <Button
@@ -37,7 +37,7 @@ class Navigation extends React.PureComponent<IProps> {
           ghost
         />
         <Drawer
-          title={<NavigationProfile fullName={`${name} ${surname}`} phone={phone} />}
+          title={<NavigationProfile fullName={`${name} ${surname}`} phone={phone} avatar={avatar} />}
           placement="left"
           closable={false}
           onClose={this.toggleDrawer}

@@ -1,5 +1,5 @@
 import { BehaviorSubject, of } from 'rxjs';
-import { failure, success, initial } from '@devexperts/remote-data-ts';
+import { failure, success, initial, pending } from '@devexperts/remote-data-ts';
 import { tap, switchMap, catchError, map } from 'rxjs/operators';
 import { isSome } from 'fp-ts/lib/Option';
 
@@ -11,8 +11,11 @@ import { TAuthentication, TRegistration } from '../namespace';
 
 const { api, storage } = getDeps();
 
-export const authentication$ = new BehaviorSubject<TAuthentication>(initial);
+const _authentication$ = new BehaviorSubject<TAuthentication>(initial);
+export const authentication$ = _authentication$.asObservable();
+
 export function authenticate(phone: string, password: string) {
+  _authentication$.next(pending);
   api.auth.authenticate(phone, password)
     .pipe(
       tap((token) => storage.saveAuthToken(token)),
@@ -20,11 +23,14 @@ export function authenticate(phone: string, password: string) {
       tap(user => userService.saveUser(user)),
       map(user => success(user)),
       catchError(error => of(failure(getErrorMessage(error)))),
-    ).subscribe(authentication$);
+    ).subscribe(user => _authentication$.next(user));
 }
 
-export const registration$ = new BehaviorSubject<TRegistration>(initial);
+const _registration$ = new BehaviorSubject<TRegistration>(initial);
+export const registration$ = _registration$.asObservable();
+
 export function register(name: string, surname: string, phone: string, password: string) {
+  _registration$.next(pending);
   api.auth.register({ name, surname, phone, password })
     .pipe(
       tap(token => storage.saveAuthToken(token)),
@@ -32,7 +38,7 @@ export function register(name: string, surname: string, phone: string, password:
       tap(user => userService.saveUser(user)),
       map(user => success(user)),
       catchError(error => of(failure(getErrorMessage(error)))),
-    ).subscribe(registration$);
+    ).subscribe(user => _registration$.next(user));
 }
 
 export function isUserAuthenticated(): boolean {

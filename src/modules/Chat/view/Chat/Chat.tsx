@@ -2,7 +2,6 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { Option, fold } from 'fp-ts/lib/Option';
 import { pipe } from 'fp-ts/lib/pipeable';
-import { BindAll } from 'lodash-decorators';
 
 import { navigationRoutes } from 'modules/routes';
 import { ChatMessages } from 'features/chatMessages';
@@ -22,7 +21,6 @@ interface IReactiveProps {
 
 type Props = IReactiveProps & RouteComponentProps<{}>;
 
-@BindAll()
 class Chat extends React.PureComponent<Props> {
   public render() {
     const { user } = this.props;

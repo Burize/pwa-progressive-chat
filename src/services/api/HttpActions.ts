@@ -42,17 +42,17 @@ class HttpActions {
   }
 
   public patch<T>(params: IHttpActionParams): AxiosObservable<T> {
-    const { url, data, options } = params;
+    const { url, data, options } = this.addHeaders(params);
     return this.request.patch(url, data, options);
   }
 
   public delete<T>(params: IHttpActionParams): AxiosObservable<T> {
-    const { url, data, options } = params;
+    const { url, data, options } = this.addHeaders(params);
     return this.request.delete(url, { ...options, data });
   }
 
   public put<T>(params: IHttpActionParams): AxiosObservable<T> {
-    const { url, data, options } = params;
+    const { url, data, options } = this.addHeaders(params);
     return this.request.put(url, data, options);
   }
 

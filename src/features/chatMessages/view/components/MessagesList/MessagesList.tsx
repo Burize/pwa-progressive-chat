@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { fold, exists } from 'fp-ts/lib/Option';
+import { fold, exists, mapNullable, toUndefined } from 'fp-ts/lib/Option';
+import { pipe } from 'fp-ts/lib/pipeable';
 
 import { IMember, IUser } from 'shared/types/models/user';
 import { block } from 'shared/helpers/bem';
@@ -33,10 +34,19 @@ class MessagesList extends React.PureComponent<Props> {
               <Message
                 message={message}
                 isOwnMessage={isOwnMessage}
-                userName={fold<IMember, string>(
-                  () => UNKNOWN_USER_NAME,
-                  a => `${a.name} ${a.surname}`,
-                )(author)}
+                userName={
+                  pipe(
+                    author,
+                    fold(
+                      () => UNKNOWN_USER_NAME,
+                      a => `${a.name} ${a.surname}`,
+                    ))}
+                avatar={
+                  pipe(
+                    author,
+                    mapNullable(a => a.avatar),
+                    toUndefined,
+                  )}
               />
             </div>
           );

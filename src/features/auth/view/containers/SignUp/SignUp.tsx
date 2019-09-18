@@ -40,7 +40,7 @@ class SignUp extends React.PureComponent<Props> {
 
 const mapPropsToRx = (props: Props): Observify<IReactiveProps> => {
 
-  actions.authentication$.pipe(
+  actions.registration$.pipe(
     filter(isSuccess),
   ).subscribe(() => props.onRegister());
 

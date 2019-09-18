@@ -20,8 +20,8 @@ export { default as Tabs } from 'antd/lib/tabs';
 import 'antd/lib/tabs/style/index.less';
 export { default as Avatar } from 'antd/lib/avatar';
 import 'antd/lib/avatar/style/index.less';
-export { default as Input } from 'antd/lib/Input';
-import 'antd/lib/Input/style/index.less';
+export { default as Input } from 'antd/lib/input';
+import 'antd/lib/input/style/index.less';
 
 export { default as Icon } from 'antd/lib/icon';
 

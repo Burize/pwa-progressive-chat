@@ -3,7 +3,7 @@ import { BindAll } from 'lodash-decorators';
 
 import { fold, either } from 'fp-ts/lib/Either';
 import { sequenceT } from 'fp-ts/lib/Apply';
-import { NonEmptyArray } from 'fp-ts/lib/NonEmptyArray';
+import { pipe } from 'fp-ts/lib/pipeable';
 
 import { block } from 'shared/helpers/bem';
 import { TextInput, Button } from 'shared/view/elements';
@@ -77,10 +77,14 @@ class SignInForm extends React.PureComponent<Props> {
   public onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const { phone, password, onSubmit } = this.props;
-    fold<NonEmptyArray<string>, [string, string], void>(
-      (_) => null,
-      ([phoneValue, passwordValue]) => { onSubmit(phoneValue, passwordValue); },
-    )(sequenceT(either)(validatePhone(phone.value), validatePassword(password.value)));
+
+    pipe(
+      sequenceT(either)(validatePhone(phone.value), validatePassword(password.value)),
+      fold(
+        (_) => null,
+        ([phoneValue, passwordValue]) => { onSubmit(phoneValue, passwordValue); },
+      ),
+    );
   }
 }
 

@@ -29,7 +29,7 @@ export const isPhone = (s: string): Either<string, string> =>
   /^((\+7|7|8)([0-9]){10})$/.test(s) ? right(s) : left('invalid phone format');
 
 export const onlyLetters = (s: string): Either<string, string> =>
-  /[^a-zA-Z]+/.test(s) ? right(s) : left('only letters');
+  /^[a-zA-Z]+/.test(s) ? right(s) : left('only letters');
 
 function lift<L, A>(
   validator: (v: A) => Either<L, A>,

@@ -1,6 +1,10 @@
-import { IRegisterRequest, IServerRegisterRequest } from '../models/auth';
-import { IServerUser, IServerMember } from '../models/user';
 import { IUser, IMember } from 'shared/types/models/user';
+import { Src } from 'shared/types/app';
+
+import {
+  IServerUser, IServerMember, IUpdateUserFields, IUpdateUserRequest, IUpdateUserAvatarResponse,
+} from '../models/user';
+import { IRegisterRequest, IServerRegisterRequest } from '../models/auth';
 
 export function convertUserRegisterRequest(request: IRegisterRequest): IServerRegisterRequest {
   const { name, surname, phone, password } = request;
@@ -18,7 +22,7 @@ export function convertUserResponse(user: IServerUser): IUser {
     name: user.firstName,
     surname: user.secondName,
     phone: user.phone,
-    avatar: user.avatar,
+    avatar: user.avatar as Src,
   };
 }
 
@@ -31,6 +35,19 @@ export function convertServerMember(member: IServerMember): IMember {
     id: member.id,
     name: member.firstName,
     surname: member.secondName,
-    avatar: member.avatar,
+    avatar: member.avatar as Src,
   };
+}
+
+export function convertUserUpdateRequest(fields: IUpdateUserFields): IUpdateUserRequest {
+  const { name, surname, phone } = fields;
+  return {
+    firstName: name,
+    secondName: surname,
+    phone,
+  };
+}
+
+export function convertUserAvatarUpdateRequest(response: IUpdateUserAvatarResponse): Src {
+  return response.avatar;
 }

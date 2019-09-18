@@ -1,0 +1,16 @@
+@import "shared/styles/palette.scss";
+
+.profile-overview {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 1.75rem 0;
+  background-color: $mirage;
+
+  &__basic-information {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: $wild-sand;
+    text-align: center;
+  }
+}

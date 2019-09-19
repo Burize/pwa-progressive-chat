@@ -1,7 +1,6 @@
 import { sequenceT } from 'fp-ts/lib/Apply';
 import { Either, getValidation, left, map, mapLeft, right } from 'fp-ts/lib/Either';
 import { getSemigroup, NonEmptyArray, map as ArrayMap } from 'fp-ts/lib/NonEmptyArray';
-
 import { pipe } from 'fp-ts/lib/pipeable';
 
 // tslint:disable:max-line-length
@@ -53,9 +52,7 @@ export const getValidator = (...validators: NonEmptyArray<TValidator>) =>
     );
   };
 
-// export const validatePassword: TValidation = getValidator(isRequired, minLength(6), oneCapital, oneNumber);
+export const validatePassword: TValidation = getValidator(isRequired, minLength(6), oneCapital, oneNumber);
 export const validateName: TValidation = getValidator(isRequired, onlyLetters, minLength(2), maxLength(12));
-
-export const validatePassword: TValidation = getValidator(isRequired);
 
 export const validatePhone: TValidation = getValidator(isRequired, isPhone);

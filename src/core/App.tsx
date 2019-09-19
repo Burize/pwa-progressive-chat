@@ -9,6 +9,8 @@ import 'shared/styles/fonts/index.scss';
 import 'shared/styles/antd-overrides.scss';
 import 'shared/styles/common.scss';
 
+import './registerWorkers';
+
 const App = () => {
   return (
     <BrowserRouter>

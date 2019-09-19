@@ -25,6 +25,11 @@ export class UserService {
     this._user$.next(some(user));
   }
 
+  public clearUser() {
+    this.storage.removeUser();
+    this._user$.next(none);
+  }
+
   public setAvatar(avatar: Src) {
     pipe(
       this.storage.getUser(),

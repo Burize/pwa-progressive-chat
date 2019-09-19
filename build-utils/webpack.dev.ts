@@ -33,8 +33,9 @@ const config: webpack.Configuration & { devServer: any } = { // devServer is not
   },
   plugins: [new webpack.HotModuleReplacementPlugin()],
   devServer: {
-    host: '10.0.0.100',
+    host: 'localhost',
     port: 8000,
+    contentBase: commonPaths.contentBase,
     historyApiFallback: true,
     hot: true,
     open: true,

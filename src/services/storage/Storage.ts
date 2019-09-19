@@ -18,6 +18,10 @@ export default class Storage {
     return fromNullable(localStorage.getItem(keys.authToken));
   }
 
+  public removeAuthToken(): void {
+    return localStorage.removeItem(keys.authToken);
+  }
+
   public saveUser(user: IUser) {
     localStorage.setItem(keys.user, JSON.stringify(user));
   }
@@ -25,5 +29,9 @@ export default class Storage {
   public getUser(): Option<IUser> {
     const user = localStorage.getItem(keys.user);
     return user ? some(JSON.parse(user)) : none;
+  }
+
+  public removeUser(): void {
+    return localStorage.removeItem(keys.user);
   }
 }

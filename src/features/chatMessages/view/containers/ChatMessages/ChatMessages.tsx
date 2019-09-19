@@ -1,8 +1,6 @@
 import * as React from 'react';
-import { combineLatest, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { BindAll } from 'lodash-decorators';
-import { fromNullable, Option, fold, none, some, isSome, isNone } from 'fp-ts/lib/Option';
+import { Option, fold, isSome, isNone } from 'fp-ts/lib/Option';
 import { pipe } from 'fp-ts/lib/pipeable';
 
 import { messagesService } from 'services/messages';
@@ -33,10 +31,15 @@ interface IReactiveProps {
 type Props = IReactiveProps;
 @BindAll()
 class ChatMessages extends React.PureComponent<Props> {
+  public componentDidMount() {
+    if (isSome(this.props.messages)) {
+      scrollToBottom(LIST_DOM_ELEMENT_ID);
+    }
+  }
+
   public componentDidUpdate(prevProps: Props) {
     const { messages } = this.props;
-    if (isSome(messages) && isSome(prevProps.messages) &&
-      messages.value.length !== 0 && prevProps.messages.value.length === 0) {
+    if (isSome(messages) && isNone(prevProps.messages)) {
       scrollToBottom(LIST_DOM_ELEMENT_ID);
     }
   }
@@ -78,31 +81,9 @@ class ChatMessages extends React.PureComponent<Props> {
 }
 
 const mapPropsToRx = (): Observify<IReactiveProps> => {
-
-  messagesService.messagesEvents$.pipe(
-    map(ev => ev.type === 'allMessages' ? ev.payload.map(m => m.userId) : [ev.payload.userId]),
-  ).subscribe(authorIds => actions.loadMembers(authorIds));
-
-  const messageWithMembers$: Observable<Option<IMessageWithAuthor[]>> =
-    combineLatest(messagesService.messages$, actions.members$).pipe(
-      map(
-        ([optionMessages, members]) => pipe(
-          optionMessages,
-          fold(
-            () => none,
-            messages => some(messages.map(message => (
-              {
-                message,
-                author: fromNullable(members.find(member => member.id === message.userId)),
-              })),
-            )),
-        ),
-      ),
-    );
-
   return {
     user: userService.user$,
-    messages: messageWithMembers$,
+    messages: actions.messageWithMembers$,
     isCanSendMessage: messagesService.isAvailable$,
     sendMessage: messagesService.sendMessage,
   };

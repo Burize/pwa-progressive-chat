@@ -61,11 +61,19 @@
   &[disabled] {
     background-color: unset;
   }
+
+  &:focus {
+    box-shadow: none;
+  }
 }
 
-.ant-avatar > img {
-  height: unset;
-  min-height: 100%;
+.ant-avatar {
+  background-color: $dark-calypso;
+
+  & > img {
+    height: unset;
+    min-height: 100%;
+  }
 }
 
 .ant-modal-content,

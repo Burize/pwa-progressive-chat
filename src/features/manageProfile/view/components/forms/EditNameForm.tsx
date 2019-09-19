@@ -42,7 +42,7 @@ class EditNameForm extends React.PureComponent<IProps> {
         onCancel={onCancel}
         footer={[
           <Button key="back" type="primary" onClick={onCancel}>
-            Return
+            Cancel
           </Button>,
           <Button key="submit" type="primary" onClick={this.submit}>
             Submit

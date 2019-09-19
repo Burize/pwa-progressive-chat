@@ -12,13 +12,14 @@ const b = block('layout');
 
 interface IProps {
   headerContent?: React.ReactElement;
+  fixedHeight?: boolean;
 }
 
 class Layout extends React.PureComponent<IProps> {
   public render() {
-    const { children, headerContent } = this.props;
+    const { children, headerContent, fixedHeight } = this.props;
     return (
-      <ALayout className={b()}>
+      <ALayout className={b({ ['fixed-height']: fixedHeight })}>
         <Header>
           {headerContent}
         </Header>

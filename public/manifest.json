@@ -1,0 +1,16 @@
+{
+  "short_name": "PWA chat",
+  "name": "PWA chat",
+  "icons": [
+    {
+      "src": "/assets/favicon.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/chat",
+  "background_color": "#101720",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#101720"
+}

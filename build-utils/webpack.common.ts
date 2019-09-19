@@ -6,7 +6,7 @@ import * as FaviconsWebpackPlugin from 'favicons-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import * as autoprefixer from 'autoprefixer';
 import * as postcssEasyImport from 'postcss-easy-import';
-// import * as ServiceWorkerWebpackPlugin from 'serviceworker-webpack-plugin';
+import * as ServiceWorkerWebpackPlugin from 'serviceworker-webpack-plugin';
 
 import getEnvParams from '../src/shared/helpers/getEnvParams';
 
@@ -120,9 +120,9 @@ const config: webpack.Configuration = {
     }),
     new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /ru|en/),
     new FaviconsWebpackPlugin(commonPaths.faviconPath),
-    // new ServiceWorkerWebpackPlugin({
-    //   entry: commonPaths.swPath,
-    // }),
+    new ServiceWorkerWebpackPlugin({
+      entry: commonPaths.swPath,
+    }),
   ].concat(Boolean(withAnalyze) ? ([
     new BundleAnalyzerPlugin(),
   ]) : []),

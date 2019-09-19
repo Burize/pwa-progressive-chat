@@ -2,10 +2,12 @@
 @import "shared/styles/palette.scss";
 
 .layout {
-  height: 100%;
-  max-height: 100%;
   background-color: $vulcan;
+  min-height: 100%;
 
+  &_fixed-height {
+    height: 100%;
+  }
   &__content {
     align-self: center;
     width: 100%;

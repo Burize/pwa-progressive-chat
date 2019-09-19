@@ -30,6 +30,7 @@ class Chat extends React.PureComponent<Props> {
           user,
           fold(() => undefined, (u) => <Navigation routes={navigationRoutes} user={u} />),
         )}
+        fixedHeight
       >
         <div className={b()}>
           <ChatMessages />

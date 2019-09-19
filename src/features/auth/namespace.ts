@@ -7,4 +7,5 @@ export type TRegistration = RemoteData<string, IUser>;
 
 export interface IAuthContract {
   isUserAuthenticated(): boolean;
+  logout(): void;
 }

@@ -45,3 +45,10 @@ export function isUserAuthenticated(): boolean {
   const token = storage.getAuthToken();
   return isSome(token);
 }
+
+export function logout(): void {
+  storage.removeAuthToken();
+  userService.clearUser();
+  _authentication$.next(initial);
+  _registration$.next(initial);
+}

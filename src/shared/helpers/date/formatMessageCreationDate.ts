@@ -13,7 +13,7 @@ export function formatMessageCreationDate(createdAt: number): string {
   }
 
   if (now.diff(createdAtDate, 'days') > 0) {
-    return createdAtDate.format('hh:mm EE');
+    return createdAtDate.format('hh:mm ddd');
   }
 
   return createdAtDate.format('hh:mm');

@@ -8,7 +8,9 @@ import { pipe } from 'fp-ts/lib/pipeable';
 import { block } from 'shared/helpers/bem';
 import { TextInput, Button } from 'shared/view/elements';
 import { withHandlers, MakeHandlersProps } from 'shared/helpers/reactive';
-import { validatePassword, validatePhone } from 'shared/helpers/forms/validations';
+import { validatePhone, validateIsRequired } from 'shared/helpers/forms/validations';
+
+import './SignInForm.scss';
 
 const b = block('sign-in-form');
 
@@ -49,7 +51,7 @@ class SignInForm extends React.PureComponent<Props> {
             type="password"
             onChange={this.onPasswordChange}
             value={password.value}
-            validation={validatePassword}
+            validation={validateIsRequired}
           />
           <Button
             htmlType="submit"
@@ -60,7 +62,9 @@ class SignInForm extends React.PureComponent<Props> {
           >
             sign in
           </Button>
-          {error}
+          <div className={b('error')}>
+            {error}
+          </div>
         </form>
       </div>
     );
@@ -79,7 +83,7 @@ class SignInForm extends React.PureComponent<Props> {
     const { phone, password, onSubmit } = this.props;
 
     pipe(
-      sequenceT(either)(validatePhone(phone.value), validatePassword(password.value)),
+      sequenceT(either)(validatePhone(phone.value), validateIsRequired(password.value)),
       fold(
         (_) => null,
         ([phoneValue, passwordValue]) => { onSubmit(phoneValue, passwordValue); },

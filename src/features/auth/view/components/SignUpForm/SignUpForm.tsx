@@ -10,7 +10,9 @@ import { TextInput, Button } from 'shared/view/elements';
 import { withHandlers, MakeHandlersProps } from 'shared/helpers/reactive';
 import { validatePassword, validatePhone, validateName } from 'shared/helpers/forms/validations';
 
-const b = block('sign-in-form');
+import './SignUpForm.scss';
+
+const b = block('sign-up-form');
 
 interface IOwnProps {
   isDisabled?: boolean;
@@ -78,7 +80,9 @@ class SignUpForm extends React.PureComponent<Props> {
           >
             sign up
           </Button>
-          {error}
+          <div className={b('error')}>
+            {error}
+          </div>
         </form>
       </div>
     );

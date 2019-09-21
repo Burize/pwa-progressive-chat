@@ -54,5 +54,5 @@ export const getValidator = (...validators: NonEmptyArray<TValidator>) =>
 
 export const validatePassword: TValidation = getValidator(isRequired, minLength(6), oneCapital, oneNumber);
 export const validateName: TValidation = getValidator(isRequired, onlyLetters, minLength(2), maxLength(12));
-
 export const validatePhone: TValidation = getValidator(isRequired, isPhone);
+export const validateIsRequired: TValidation = getValidator(isRequired);

@@ -4,6 +4,8 @@ This application is [PWA](https://developers.google.com/web/progressive-web-apps
 
 > There are not separate user dialogs at that moment - all users are in the same dialog(room).
 
+> Also, there is [version](https://github.com/Burize/flutter-chat) of this chat written on Flutter.
+
 #### User registration
 ------------
 ![](demo/user-registration.webp)
@@ -12,6 +14,10 @@ This application is [PWA](https://developers.google.com/web/progressive-web-apps
 #### Launch app from main screen at mobile
 ------------
 ![](demo/launch-via-icon.webp)
+
+#### Launch app from desktop
+------------ 
+![](demo/launch-from-desktop.webp)
 
 
 ## Features

@@ -34,6 +34,13 @@ This application is [PWA](https://developers.google.com/web/progressive-web-apps
 - [Antd](https://github.com/ant-design/ant-design/) as components kits.
 - [Fp-ts](https://github.com/gcanti/fp-ts) to use abstractions that are available in most functional languages: Option, Either, Apply and etc.
 
+
+## Getting Started
+
+For work with api, you need deploy [server](https://github.com/Burize/chat-backend) for authentication and receiving message.
+
+Then, set appropriate urls (`API_URL/WS_URL`) to api at `package.json`.
+
 ### NPM scripts
 - ```npm i``` for installing dependencies
 - ```npm run dev``` for development environment in watch mode

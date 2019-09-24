@@ -1,7 +1,7 @@
-import { Branding } from '../utils';
+import { Flavoring } from '../utils';
 import { Src } from '../app';
 
-export type UserId = Branding<'userId', string>;
+export type UserId = Flavoring<'userId', string>;
 
 export interface IUser {
   id: UserId;

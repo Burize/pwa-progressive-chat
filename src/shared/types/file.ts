@@ -1,11 +1,11 @@
-import { Branding } from './utils';
+import { Flavoring } from './utils';
 
 export type FileType = 'pdf' | 'doc' | 'xls' | 'txt' | 'zip' | 'jpg' | 'png' | 'unknown';
 
 export type MegaBytes = number;
 export type Bytes = number;
 export type DataUrl = string;
-export type Base64 = Branding<'Base64', string>;
+export type Base64 = Flavoring<'Base64', string>;
 
 export interface IFile {
   type: FileType;

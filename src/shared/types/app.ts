@@ -4,9 +4,9 @@ import { RouteProps } from 'react-router';
 import { Api, Socket } from 'services/api';
 import Storage from 'services/storage/Storage';
 
-import { Branding } from './utils';
+import { Flavoring } from './utils';
 
-export type Src = Branding<'src', string>;
+export type Src = Flavoring<'src', string>;
 
 export interface IModule {
   getRoutes(): ReactElement<RouteProps> | Array<ReactElement<RouteProps>>;

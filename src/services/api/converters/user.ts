@@ -22,7 +22,7 @@ export function convertUserResponse(user: IServerUser): IUser {
     name: user.firstName,
     surname: user.secondName,
     phone: user.phone,
-    avatar: user.avatar as Src,
+    avatar: user.avatar,
   };
 }
 
@@ -35,7 +35,7 @@ export function convertServerMember(member: IServerMember): IMember {
     id: member.id,
     name: member.firstName,
     surname: member.secondName,
-    avatar: member.avatar as Src,
+    avatar: member.avatar,
   };
 }
 

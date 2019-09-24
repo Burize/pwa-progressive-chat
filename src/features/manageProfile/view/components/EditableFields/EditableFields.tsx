@@ -100,7 +100,7 @@ class EditableFields extends React.PureComponent<Props> {
   }
 
   private updateAvatar(avatar: IFile) {
-    this.props.onUpdateAvatar(avatar.dataUrl as Base64);
+    this.props.onUpdateAvatar(avatar.dataUrl);
   }
 
   private showWrongImageFormatError() {

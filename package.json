@@ -56,7 +56,7 @@
     "antd": "^3.23.2",
     "autoprefixer": "^9.5.1",
     "awesome-typescript-loader": "^5.2.1",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "axios-observable": "^1.1.1",
     "babel-loader": "^8.0.5",
     "classnames": "^2.2.6",
